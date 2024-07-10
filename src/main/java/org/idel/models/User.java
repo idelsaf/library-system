@@ -2,7 +2,6 @@ package org.idel.models;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 public class User {
@@ -17,8 +16,7 @@ public class User {
 
     public User() {}
 
-    public User(int id, String name, int birthYear) {
-        this.id = id;
+    public User(String name, int birthYear) {
         this.name = name;
         this.birthYear = birthYear;
     }
