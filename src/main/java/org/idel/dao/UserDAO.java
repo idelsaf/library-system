@@ -41,7 +41,7 @@ public class UserDAO {
     }
 
     public List<Book> getBooks(int id) {
-        return jdbcTemlate.query("SELECT * FROM books WHERE user_id=?", new Object[]{id},
+        return jdbcTemplate.query("SELECT * FROM books WHERE user_id=?", new Object[]{id},
                 new BeanPropertyRowMapper<>(Book.class));
     }
 
