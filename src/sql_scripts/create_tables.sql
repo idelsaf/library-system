@@ -1,0 +1,13 @@
+CREATE TABLE users(
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name VARCHAR(100) UNIQUE NOT NULL,
+    birth_year INT
+);
+
+CREATE TABLE books(
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    author VARCHAR(100),
+    writing_year INT,
+    user_id INT REFERENCES users(id) ON DELETE SET NULL
+);
