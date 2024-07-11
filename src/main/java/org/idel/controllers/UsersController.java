@@ -62,8 +62,6 @@ public class UsersController {
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
                          @PathVariable("id") int id) {
-        userValidator.validate(user, bindingResult);
-
         if (bindingResult.hasErrors()) {
             return "users/edit";
         }
