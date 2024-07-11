@@ -4,18 +4,23 @@ import jakarta.validation.Valid;
 import org.idel.dao.BookDAO;
 import org.idel.dao.UserDAO;
 import org.idel.models.Book;
+import org.idel.models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/books")
 public class BooksController {
     private final BookDAO bookDAO;
+    private final UserDAO userDAO;
 
     public BooksController(BookDAO bookDAO, UserDAO userDAO) {
         this.bookDAO = bookDAO;
+        this.userDAO = userDAO;
     }
 
     @GetMapping()
@@ -25,9 +30,16 @@ public class BooksController {
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
+    public String show(@PathVariable("id") int id, Model model, @ModelAttribute("user") User user) {
         model.addAttribute("book", bookDAO.show(id));
-        model.addAttribute("user", bookDAO.getBookOwner(id));
+
+        Optional<User> owner = bookDAO.getBookOwner(id);
+
+        if (owner.isPresent()) {
+            model.addAttribute("owner", owner.get());
+        } else {
+            model.addAttribute("users", userDAO.index());
+        }
 
         return "books/show";
     }
@@ -68,5 +80,19 @@ public class BooksController {
     public String delete(@PathVariable("id") int id) {
         bookDAO.delete(id);
         return "redirect:/books";
+    }
+
+    @PatchMapping("/{id}/assign")
+    public String assign(@PathVariable("id") int id, @ModelAttribute("user") User user) {
+        bookDAO.assign(id,user);
+
+        return "redirect:/books/" + id;
+    }
+
+    @PatchMapping("/{id}/release")
+    public String release(@PathVariable("id") int id) {
+        bookDAO.release(id);
+
+        return "redirect:/books/" + id;
     }
 }
