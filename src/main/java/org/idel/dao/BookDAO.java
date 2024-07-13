@@ -1,7 +1,7 @@
 package org.idel.dao;
 
-import org.idel.models.Book;
-import org.idel.models.User;
+import org.idel.entity.Book;
+import org.idel.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,11 +19,11 @@ public class BookDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Book> index() {
+    public List<Book> getAllBooks() {
         return jdbcTemplate.query("SELECT * FROM books", new BeanPropertyRowMapper<>(Book.class));
     }
 
-    public Book show(int id) {
+    public Book getBookById(int id) {
         return jdbcTemplate.query("SELECT * FROM books WHERE id=?", new Object[]{id},
                 new BeanPropertyRowMapper<>(Book.class)).stream().findAny().orElse(null);
     }
@@ -43,11 +43,16 @@ public class BookDAO {
     }
 
     public Optional<User> getBookOwner(int id) {
-        return jdbcTemplate.query("SELECT users.* FROM books " +
-                "JOIN users ON books.user_id = users.id " +
-                "WHERE books.id = ?",
-                new Object[]{id}, new BeanPropertyRowMapper(User.class))
-                .stream().findAny();
+        String sql = "SELECT u.*" +
+                     " FROM books b " +
+                     "JOIN users u ON b.id = u.id " +
+                     "WHERE b.id = ?";
+
+        return jdbcTemplate.query(sql,
+                        new Object[]{id},
+                        new BeanPropertyRowMapper(User.class))
+                .stream()
+                .findAny();
     }
 
     public void assign(int id, User user) {

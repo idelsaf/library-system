@@ -1,7 +1,7 @@
 package org.idel.util;
 
 import org.idel.dao.UserDAO;
-import org.idel.models.User;
+import org.idel.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -17,8 +17,8 @@ public class UserValidator implements Validator {
     }
 
     @Override
-    public boolean supports(Class<?> clazz) {
-        return User.class.equals(clazz);
+    public boolean supports(Class<?> comparableClass) {
+        return User.class.equals(comparableClass);
     }
 
     @Override

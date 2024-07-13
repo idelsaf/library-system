@@ -2,7 +2,7 @@ package org.idel.controllers;
 
 import jakarta.validation.Valid;
 import org.idel.dao.UserDAO;
-import org.idel.models.User;
+import org.idel.entity.User;
 import org.idel.util.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,14 +24,14 @@ public class UsersController {
 
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("users", userDAO.index());
+        model.addAttribute("users", userDAO.getUsers());
         return "users/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("user", userDAO.show(id));
-        model.addAttribute("books", userDAO.getBooks(id));
+        model.addAttribute("user", userDAO.getUserById(id));
+        model.addAttribute("books", userDAO.getBooksByUserId(id));
 
         return "users/show";
     }
@@ -55,7 +55,7 @@ public class UsersController {
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") int id, Model model) {
-        model.addAttribute("user", userDAO.show(id));
+        model.addAttribute("user", userDAO.getUserById(id));
         return "users/edit";
     }
 

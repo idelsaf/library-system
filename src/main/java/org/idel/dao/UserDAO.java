@@ -1,7 +1,7 @@
 package org.idel.dao;
 
-import org.idel.models.Book;
-import org.idel.models.User;
+import org.idel.entity.Book;
+import org.idel.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,11 +19,11 @@ public class UserDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<User> index() {
+    public List<User> getUsers() {
         return jdbcTemplate.query("SELECT * FROM users", new BeanPropertyRowMapper<>(User.class));
     }
 
-    public User show(int id) {
+    public User getUserById(int id) {
         return jdbcTemplate.query("SELECT * FROM users WHERE id=?", new Object[]{id},
                 new BeanPropertyRowMapper<>(User.class)).stream().findAny().orElse(null);
     }
@@ -40,7 +40,7 @@ public class UserDAO {
         jdbcTemplate.update("DELETE FROM users WHERE id=?", id);
     }
 
-    public List<Book> getBooks(int id) {
+    public List<Book> getBooksByUserId(int id) {
         return jdbcTemplate.query("SELECT * FROM books WHERE user_id=?", new Object[]{id},
                 new BeanPropertyRowMapper<>(Book.class));
     }

@@ -1,9 +1,22 @@
-package org.idel.models;
+package org.idel.entity;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = "id")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     private int id;
 
@@ -14,34 +27,8 @@ public class User {
     @Max(value = 2024, message = "You weren't born yet :(")
     private int birthYear;
 
-    public User() {}
-
     public User(String name, int birthYear) {
         this.name = name;
-        this.birthYear = birthYear;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getBirthYear() {
-        return birthYear;
-    }
-
-    public void setBirthYear(int birthYear) {
         this.birthYear = birthYear;
     }
 }
