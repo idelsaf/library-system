@@ -1,0 +1,93 @@
+body {
+    font-family: 'Helvetica Neue', sans-serif;
+    background: url('https://source.unsplash.com/1600x900/?library') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #fff;
+}
+.container {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 30px 40px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+h3 {
+    color: #f9f9f9;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+a {
+    display: inline-block;
+    margin: 10px 0;
+    padding: 12px 25px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+a:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
