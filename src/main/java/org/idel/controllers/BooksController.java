@@ -3,12 +3,18 @@ package org.idel.controllers;
 import jakarta.validation.Valid;
 import org.idel.dao.BookDAO;
 import org.idel.dao.UserDAO;
-import org.idel.models.Book;
-import org.idel.models.User;
+import org.idel.entity.Book;
+import org.idel.entity.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Optional;
 
@@ -25,20 +31,20 @@ public class BooksController {
 
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("books", bookDAO.index());
+        model.addAttribute("books", bookDAO.getAllBooks());
         return "books/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model, @ModelAttribute("user") User user) {
-        model.addAttribute("book", bookDAO.show(id));
+        model.addAttribute("book", bookDAO.getBookById(id));
 
         Optional<User> owner = bookDAO.getBookOwner(id);
 
         if (owner.isPresent()) {
             model.addAttribute("owner", owner.get());
         } else {
-            model.addAttribute("users", userDAO.index());
+            model.addAttribute("users", userDAO.getUsers());
         }
 
         return "books/show";
@@ -61,7 +67,7 @@ public class BooksController {
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") int id, Model model) {
-        model.addAttribute("book", bookDAO.show(id));
+        model.addAttribute("book", bookDAO.getBookById(id));
         return "books/edit";
     }
 
